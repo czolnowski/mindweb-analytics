@@ -1,0 +1,23 @@
+{
+    "name": "mindweb-analytics",
+    "version": "1.0.0",
+    "description": "Analytics application, core of mindweb-analytics.",
+    "author": "Marcin Czołnowski <marcin@mindweb.pl>",
+    "keywords": ["analytics", "mindweb"],
+    "homepage": "http://mindweb.pl",
+    "bugs": {
+        "url" : "http://github.com/czolnowski/mindweb-analytics/issues",
+        "email" : "marcin@mindweb.pl"
+    },
+    "bin": {
+        "tracker": "./bin/tracker"
+    },
+    "main": "src/tracker.js",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/czolnowski/mindweb-analytics"
+    },
+    "dependencies": {},
+    "devDependencies": {},
+    "license": "MIT"
+}
