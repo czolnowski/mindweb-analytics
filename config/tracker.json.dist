@@ -2,7 +2,7 @@
     "module": "mindweb-analytics-tracker",
     "domain": "mindweb-tracker.tld",
     "port": "8080",
-    "dataStore": "./modules/NullDataStore",
+    "dataStore": "./dataStores/NullDataStore",
     "modules": [
         "./modules/Pixel"
     ]
