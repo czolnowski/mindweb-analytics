@@ -23,9 +23,9 @@
   "dependencies": {
     "underscore": "1.7.0",
     "mindweb-logger": "1.1.0",
-    "mindweb-analytics-tracker": "1.0.5",
-    "minimist": "~1.1.0",
-    "prettyjson": "~1.0.0"
+    "mindweb-analytics-tracker": "1.1.2",
+    "minimist": "1.1.0",
+    "prettyjson": "1.0.0"
   },
   "devDependencies": {},
   "license": "MIT"

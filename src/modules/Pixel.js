@@ -34,16 +34,11 @@ Pixel.prototype.handleResponse = function handleResponse(response)
 
 Pixel.prototype.onEnd = function onEnd(promise)
 {
-    var that = this;
+    var handler = function (values) {
+        this.handleResponse(values.response);
+    }.bind(this);
 
-    promise.then(
-        function (values)
-        {
-            that.handleResponse(
-                values.response
-            );
-        }
-    );
+    promise.then(handler, handler);
 };
 
 module.exports = Pixel;
