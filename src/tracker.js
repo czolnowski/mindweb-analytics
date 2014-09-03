@@ -1,9 +1,11 @@
 var logger = require('mindweb-logger'),
     argv = require('minimist')(process.argv.slice(2)),
     Config = require('./Config'),
+    ModuleFactory = require('./ModuleFactory'),
 
     configPath = '../config/tracker.json',
     config = new Config(),
+    moduleFactory = new ModuleFactory(),
     tracker,
     dataStoreClass,
     dataStore;
@@ -35,10 +37,31 @@ tracker.setDataStore(dataStore);
 config.get('modules').forEach(
     function (module)
     {
-        var ModuleClass = require(module),
-            instance = new ModuleClass();
+        var instance,
+            name;
 
-        instance.register(tracker);
+        if (typeof module === 'string') {
+            instance = moduleFactory.factory(require(module));
+            name = module.split('/').slice(-1)[0];
+        } else if (typeof module === 'object' && typeof module.module === 'string') {
+            instance = moduleFactory.factory(require(module.module), module.args);
+            if (typeof module.name !== 'string') {
+                name = module.module.split('/').slice(-1)[0];
+            } else {
+                name = module.name;
+            }
+        } else {
+            return;
+        }
+
+        if (typeof instance !== 'undefined') {
+            if (typeof instance.register === 'function') {
+                instance.register(tracker);
+            } else {
+                tracker.register(name, instance);
+            }
+        }
+
     }
 );
 
