@@ -1,15 +1,10 @@
-var Rec = function ()
+var Rec = function (rec)
     {
         this.logger = null;
-    };
 
-Rec.prototype.register = function register(tracker)
-{
-    tracker.register(
-        'Rec',
-        this
-    );
-};
+        this.rec = typeof rec === 'string' ? rec : 'rec';
+    },
+    sprintf = require('util').format;
 
 Rec.prototype.setLogger = function setLogger(logger)
 {
@@ -21,20 +16,25 @@ Rec.prototype.onConnection = function onConnection(connection)
     connection.then(
         function (values)
         {
-            var error = null;
+            var error = null,
+                recName = this.rec.charAt(0).toUpperCase() + this.rec.slice(1);
 
-            if (typeof values.request.query.rec === 'undefined') {
-                error = new Error('Rec undefined, do not track.');
+            if (typeof values.request.query[this.rec] === 'undefined') {
+                error = new Error(
+                    sprintf('%s undefined, do not track.', recName)
+                );
                 error.key = 'REC_NOT_DEFINED';
-            } else if (values.request.query.rec != '1') {
-                error = new Error('Rec != 1, do not track.');
+            } else if (values.request.query[this.rec] != '1') {
+                error = new Error(
+                    sprintf('%s != 1, do not track.', recName)
+                );
                 error.key = 'REC_NOT_DEFINED';
             }
 
             if (error !== null) {
                 throw error;
             }
-        }
+        }.bind(this)
     );
 };
 
